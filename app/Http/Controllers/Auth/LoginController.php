@@ -15,7 +15,7 @@ class LoginController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
+    | redirecting them to your dashboard screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
     */
@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -45,27 +45,23 @@ class LoginController extends Controller
      * @return RedirectResponse
      */
     public function login(Request $request): RedirectResponse
-    {   
+    {
         $input = $request->all();
-     
+
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-     
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
-        {
+
+        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             if (auth()->user()->type == 'admin') {
-                return redirect()->route('admin.home');
-            }else if (auth()->user()->type == 'manager') {
-                return redirect()->route('manager.home');
-            }else{
-                return redirect()->route('home');
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('dashboard');
             }
-        }else{
+        } else {
             return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+                ->with('error', 'Email-Address And Password Are Wrong.');
         }
-          
     }
 }
