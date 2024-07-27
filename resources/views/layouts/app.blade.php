@@ -46,6 +46,12 @@
                     'icon' => 'fa fa-tachometer-alt',
                     'submenu' => [],
                 ],
+                [
+                    'title' => 'Service',
+                    'route' => $guardRoutePrefix . 'services.index',
+                    'icon' => 'fa fa-tachometer-alt',
+                    'submenu' => [],
+                ],
             ];
         @endphp
         <!-- Sidebar Start -->
